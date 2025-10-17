@@ -1,0 +1,52 @@
+Char buff[Buff_size] (temporary memory buffer to store the content read from the read function each time)
+Char *content_read; (store the content that was read from the buff each time after read function runs)
+Int byte_read; (the bytes that was read from the read function)
+Int line_len; 
+Char *read out (for writing out the output of the line read)
+Int I (index number)
+Static Int j (index number)
+
+
+Byte_read = read(fd,  buff, buff_size)
+If (byte_read < 0) (if no content is read, return NULL)
+	return NULL;
+content_read = malloc((buff_zie+1) * sizeofchar)
+while (buff[I])
+	if buff[I] != \n or 0
+   		 line_len ++;
+	content_read[j++] = buff[I++]
+I = 0; 
+If line_len < buff_size+1
+	read_out = malloc((line_len+1) * sizeofchar)
+	while(I<j)
+		read_out[I++] =  content_read[I++]
+	read_out[I]= \n
+
+    
+
+function get_next_line(fd):
+    static char *stash;     // save remainder from previous call
+    char buff[BUFFER_SIZE + 1];
+    char *newline_pos;
+    char *line; (for writing out the output of the line read)
+    int bytes_read; (the bytes that was read from the read function)
+
+    // Keep reading until we find a newline or reach EOF
+    while (newline not found in stash):
+        bytes_read = read(fd, buff, BUFFER_SIZE)
+        if (bytes_read < 0)
+            return NULL
+        if (bytes_read == 0)
+            break  // EOF reached
+
+        buff[bytes_read] = '\0'
+        stash = join(stash, buff)  // concatenate and free old stash
+    end while
+
+    // Extract one line from stash (up to \n or end)
+    line = extract_line(stash)
+
+    // Update stash to keep what's left after that line
+    stash = keep_after_line(stash)
+
+    return line
