@@ -6,7 +6,7 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:47:34 by tthwe             #+#    #+#             */
-/*   Updated: 2025/10/17 02:26:01 by tthwe            ###   ########.fr       */
+/*   Updated: 2025/10/17 19:08:23 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,103 @@ char	*get_next_line(int fd)
 
 ////
 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/16 09:47:34 by tthwe             #+#    #+#             */
+/*   Updated: 2025/10/18 01:37:27 by tthwe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
+
+static char	*update_temp_store(char *temp, char *buff)
+{
+	char	*update;
+
+	update = ft_strjoin(temp, buff);
+	free(temp);
+	return (update);
+}
+
+static char	*remove_old_line(char *temp, char *new_line_pos)
+{
+	char	*remain;
+
+	if (new_line_pos == NULL)
+	{
+		free(temp);
+		return (NULL);
+	}
+	else
+	{
+		remain = ft_strdup(new_line_pos + 1);
+		free(temp);
+		return (remain);
+	}
+}
+
+static char	*store_line_content(char *temp, char *new_line_pos)
+{
+	char	*content;
+	int		len;
+
+	len = 0;
+	if (new_line_pos == NULL)
+		len = ft_strlen(temp);
+	else
+		len = new_line_pos - temp + 1;
+	content = ft_substr(temp, 0, len);
+	return (content);
+}
 
 char	*get_next_line(int fd)
 {
-	int				bytes_read;
-	static char*	temp_store;
-	char*			line;
-	char			buffer[BUFF_SIZE + 1];
-	char*			new_line_pos;
-	int				len;
+	int			bytes_read;
+	static char	*temp_store;
+	char		*line;
+	char		buffer[BUFF_SIZE + 1];
+	char		*new_line_pos;
 
-	len = 0;
-	new_line_pos == NULL;
-	temp_store = ft_strdup("");
+	new_line_pos = NULL;
+	if (!temp_store)
+		temp_store = ft_strdup("");
 	while (new_line_pos == NULL)
 	{
 		bytes_read = read(fd, buffer, BUFF_SIZE);
 		if (bytes_read == -1)
+		{
+			free(temp_store);
 			return (NULL);
+		}
 		if (bytes_read == 0)
 			break ;
-		if (!temp_store)
-			temp_store = ft_strdup("");
 		buffer[bytes_read] = '\0';
-		temp_store = ft_strjoin(temp_store, buffer); (If ft_strjoin allocates new memory, the old temp_store isn’t freed.
-			You can fix this by using a helper that joins and frees the old one (like join_and_free).)
+		temp_store = update_temp_store(temp_store, buffer);
 		new_line_pos = ft_strchr(temp_store, '\n');
 	}
-	len = new_line_pos - temp_store;
-	line = ft_substr(temp_store, 0, len);
+	line = store_line_content(temp_store, new_line_pos);
+	temp_store = remove_old_line(temp_store, new_line_pos);
+	return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*read;
+
+	fd = open("thoughts.txt", O_RDONLY);
+	if (fd < 0)
+		return (1);
+	while ((read = get_next_line(fd)) != NULL)
+	{
+		printf("%s", read);
+		free(read);
+	}
+	close(fd);
+	return (0);
 }
