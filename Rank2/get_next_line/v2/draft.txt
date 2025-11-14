@@ -1,0 +1,27 @@
+// static char	*store_leftover(char *all_stored)
+// {
+// 	char	*leftover;
+// 	int		i;
+// 	int		j;
+
+// 	i = 0;
+// 	j = 0;
+// 	if (!all_stored)
+// 		return (NULL);
+// 	while (all_stored[i] && all_stored[i] != '\n')
+// 		i++;
+// 	if ( all_stored[i] == '\n' && all_stored[i + 1] == '\0')
+// 	{
+// 		free(all_stored);
+// 		return (NULL);
+// 	}
+// 	leftover = (char *)malloc(ft_strlen(all_stored) - (i + 1)  + 1);
+// 	if (!leftover)
+// 		return (NULL);
+// 	i++;
+// 	while (all_stored[i])
+// 		leftover[j++] = all_stored[i++];
+// 	leftover[j] = '\0';
+// 	free (all_stored);
+// 	return (leftover);
+// }
