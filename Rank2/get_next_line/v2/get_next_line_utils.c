@@ -6,25 +6,12 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 00:45:58 by tthwe             #+#    #+#             */
-/*   Updated: 2025/11/14 18:52:24 by tthwe            ###   ########.fr       */
+/*   Updated: 2025/11/15 16:41:06 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strcpy(char *dest, const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src [i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 size_t	ft_strlen(const char *s)
 {
 	int	i;

@@ -6,15 +6,14 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:23:56 by tthwe             #+#    #+#             */
-/*   Updated: 2025/11/15 15:53:07 by tthwe            ###   ########.fr       */
+/*   Updated: 2025/11/15 17:02:24 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <sys/wait.h>
 #include "get_next_line.h"
 
-static char	*read_full_line(char *all_stored)
+static char	*extract_line(char *all_stored)
 {
 	char	*result;
 	int		i;
@@ -35,6 +34,8 @@ static char	*read_full_line(char *all_stored)
 		result[i] = all_stored[i];
 		i++;
 	}
+	if (all_stored[i] == '\n')
+		result[i++] = '\n';
 	result[i] = '\0';
 	return (result);
 }
@@ -51,11 +52,10 @@ static char	*store_leftover(char *all_stored)
 	i = 0;
 	while (all_stored[i] && all_stored[i] != '\n')
 		i++;
-	// if (all_stored[i] == '\n')
-	// 	i++;
 	if (!all_stored[i])
 	{
 		free(all_stored);
+		all_stored = NULL;
 		return (NULL);
 	}
 	if (len <= i + 1)
@@ -68,7 +68,7 @@ static char	*store_leftover(char *all_stored)
 	return (leftover);
 }
 
-static char	*read_line(int fd, char *all_stored, char *read_buffer)
+static char	*read_buffer(int fd, char *all_stored, char *read_buffer)
 {
 	ssize_t		bytes_read;
 	char		*temp;
@@ -96,6 +96,20 @@ static char	*read_line(int fd, char *all_stored, char *read_buffer)
 	return (all_stored);
 }
 
+char	*ft_strcpy(char *dest, const char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src [i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*buffer;
@@ -109,14 +123,15 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!store)
 		store = NULL;
-	store = read_line(fd, store, buffer);
-	free(buffer); /*need to understand why it can be free outside of the loop*/
+	store = read_buffer(fd, store, buffer);
+	free(buffer);
 	if (!store)
 		return (NULL);
-	line = read_full_line(store);
+	line = extract_line(store);
 	store = store_leftover(store);
 	return (line);
 }
+
 
 // int	main(void)
 // {
@@ -141,25 +156,25 @@ char	*get_next_line(int fd)
 // 	return (0);
 // }
 
-int	main(void)
-{
-	int		fd;
-	char	*read;
-	int		i;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*read;
+// 	int		i;
 
-	fd = open("test.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	i = 1;
-	while (i)
-	{
-		read = get_next_line(fd);
-		if (!read)
-			break ;
-		printf("test %d: %s \n", i, read);
-		free(read);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd < 0)
+// 		return (1);
+// 	i = 1;
+// 	while (i)
+// 	{
+// 		read = get_next_line(fd);
+// 		if (!read)
+// 			break ;
+// 		printf("test %d: %s \n", i, read);
+// 		free(read);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
