@@ -6,7 +6,7 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:23:56 by tthwe             #+#    #+#             */
-/*   Updated: 2025/11/14 20:39:32 by tthwe            ###   ########.fr       */
+/*   Updated: 2025/11/15 15:53:07 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static char	*store_leftover(char *all_stored)
 	i = 0;
 	while (all_stored[i] && all_stored[i] != '\n')
 		i++;
-	if (all_stored[i] == '\n')
-		i++;
+	// if (all_stored[i] == '\n')
+	// 	i++;
 	if (!all_stored[i])
 	{
 		free(all_stored);
@@ -141,25 +141,25 @@ char	*get_next_line(int fd)
 // 	return (0);
 // }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*read;
-// 	int		i;
+int	main(void)
+{
+	int		fd;
+	char	*read;
+	int		i;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	if (fd < 0)
-// 		return (1);
-// 	i = 1;
-// 	while (i)
-// 	{
-// 		read = get_next_line(fd);
-// 		if (!read)
-// 			break ;
-// 		printf("test %d: %s \n", i, read);
-// 		free(read);
-// 		i++;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("test.txt", O_RDONLY);
+	if (fd < 0)
+		return (1);
+	i = 1;
+	while (i)
+	{
+		read = get_next_line(fd);
+		if (!read)
+			break ;
+		printf("test %d: %s \n", i, read);
+		free(read);
+		i++;
+	}
+	close(fd);
+	return (0);
+}
