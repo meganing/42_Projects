@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:23:56 by tthwe             #+#    #+#             */
-/*   Updated: 2025/11/15 17:56:36 by tthwe            ###   ########.fr       */
+/*   Updated: 2025/11/15 17:52:45 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*extract_line(char *all_stored)
 {
@@ -113,7 +113,7 @@ char	*ft_strcpy(char *dest, const char *src)
 char	*get_next_line(int fd)
 {
 	char		*buffer;
-	static char	*store;
+	static char	*store[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -121,39 +121,16 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	if (!store)
-		store = NULL;
-	store = read_buffer(fd, store, buffer);
+	if (!store[fd])
+		store[fd] = NULL;
+	store[fd] = read_buffer(fd, store[fd], buffer);
 	free(buffer);
-	if (!store)
+	if (!store[fd])
 		return (NULL);
-	line = extract_line(store);
-	store = store_leftover(store);
+	line = extract_line(store[fd]);
+	store[fd] = store_leftover(store[fd]);
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*read;
-// 	int		i;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	if (fd < 0)
-// 		return (1);
-// 	i = 0;
-// 	while (1)
-// 	{
-// 		read = get_next_line(fd);
-// 		if (read == NULL)
-// 			break ;
-// 		printf("test%d :%s\n"	// int		i;, i, read);
-// 		i++;
-// 		free(read);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
 
 // int	main(void)
 // {
