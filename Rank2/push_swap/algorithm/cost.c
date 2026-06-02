@@ -12,11 +12,11 @@
 
 #include "../push_swap.h"
 
-int	ft_max(int a, int b)
+static int	single_cost(int pos, int size)
 {
-	if (a > b)
-		return (a);
-	return (b);
+	if (pos > size / 2)
+		return (size - pos);
+	return (pos);
 }
 
 t_stack	*find_max(t_stack *stack)
@@ -76,23 +76,15 @@ int	calc_cost(t_stack *a, t_stack *b, t_stack *b_node)
 	int		size_b;
 	int		pos_b;
 	int		pos_a;
-	int		cost_b;
-	int		cost_a;
 
 	size_a = stack_size(a);
 	size_b = stack_size(b);
 	pos_b = get_pos(b, b_node);
 	target = find_target(a, b_node->data);
 	pos_a = (get_pos(a, target) + 1) % size_a;
-	cost_b = pos_b;
-	if (pos_b > size_b / 2)
-		cost_b = size_b - pos_b;
-	cost_a = pos_a;
-	if (pos_a > size_a / 2)
-		cost_a = size_a - pos_a;
 	if ((pos_b <= size_b / 2) && (pos_a <= size_a / 2))
 		return (ft_max(pos_b, pos_a));
 	if ((pos_b > size_b / 2) && (pos_a > size_a / 2))
 		return (ft_max(size_b - pos_b, size_a - pos_a));
-	return (cost_b + cost_a);
+	return (single_cost(pos_b, size_b) + single_cost(pos_a, size_a));
 }

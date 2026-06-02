@@ -6,7 +6,7 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 19:33:10 by tthwe             #+#    #+#             */
-/*   Updated: 2025/10/15 03:07:10 by tthwe            ###   ########.fr       */
+/*   Updated: 2026/06/03 04:44:34 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct s_list		
+typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;

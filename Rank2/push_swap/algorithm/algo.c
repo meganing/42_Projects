@@ -12,6 +12,13 @@
 
 #include "../push_swap.h"
 
+int	ft_max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
 t_stack	*find_cheapest(t_stack *a, t_stack *b)
 {
 	t_stack	*cheapest;
