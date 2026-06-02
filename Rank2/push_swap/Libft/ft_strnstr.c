@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/06/03 00:50:09 by tthwe            ###   ########.fr       */
+/*   Created: 2025/09/07 02:08:58 by tthwe             #+#    #+#             */
+/*   Updated: 2025/09/07 02:40:54 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack **src, t_stack **dst)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	t_stack	*node;
+	size_t	i;
+	size_t	j;
 
-	if (!*src)
-		return ;
-	node = *src;
-	*src = (*src)->next;
-	node->next = *dst;
-	*dst = node;
-}
-
-void	pa(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
+	i = 0;
+	j = 0;
+	if (!little[i])
+		return ((char *)big);
+	while (big[j] && j < len)
+	{
+		while (big[j + i] == little[i] && little[i] && big[j + i]
+			&& j + i < len)
+		{
+			i++;
+		}
+		if (little[i] == '\0')
+			return ((char *)&big[j]);
+		j++;
+		i = 0;
+	}
+	return (NULL);
 }

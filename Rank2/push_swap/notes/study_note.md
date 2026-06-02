@@ -2,13 +2,13 @@ This note is created to store my thinking/reasoning process over the project, as
 
 ## Reasons for choosing Turk Algo ##
 
-When I was doing the project, I looked into different algorithms that can be used :Butterfly, Bubble, Greedy, Radix. Among them, the most suggested by my peers was Radix. As I studied further, I found that Radix has superior O effciency among all, but at the end, I choose to use Turk. 
+When I was doing the project, I looked into different algorithms that can be used :Butterfly, Bubble, Greedy, Radix. Among them, the most suggested by my peers was Radix. As I studied further, I found that Radix has superior O effciency among all, but at the end, I chose to use Turk. 
 
 The reason is that: Turk works better in this project, provided that we will only sort till 500 numbers. With a smaller number of items to work with, Turk will always choose the way that costs the least, meanwhile, Radix will take same consistent steps to check bits by bits, so, it practically makes Turks takes lesser steps to reach the optimal solution compared to Radix. (In other words, the constant factor involved in this problem still have big influence on the overall efficiency since the sample size is small. If  )
 
 If the problem allows very large numbers for trying, I will go with Radix for sure, as that will be a more efficient choice in ther long term.  (In other words, the constant factor involved in this problem still have big influence on the overall efficiency since the sample size is small. As the sample size grows bigger and bigger, the influence of the constant factor will be smaller or negligible, at this time, it would better to use algorithm with better big O notation. )
 
-What I learned here: When we choose al algorithm to work with a problem, we should consider not only the efficiency, but also the pratical costs within the scope of the problem, and go for the optimal/practical one.
+What I learned here: When we choose an algorithm to work with a problem, we should consider not only the efficiency, but also the pratical costs within the scope of the problem, and go for the optimal/practical one.
 
 ## Consideration for my struct structure
 

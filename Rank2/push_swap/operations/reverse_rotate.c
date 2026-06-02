@@ -6,7 +6,7 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/05/28 02:50:26 by tthwe            ###   ########.fr       */
+/*   Updated: 2026/06/03 01:00:19 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 static void	reverse_rotate(t_stack **stack)
 {
 	t_stack	*last;
+	t_stack	*tmp;
 
 	if (!*stack || !(*stack)->next)
 		return ;
+	tmp = NULL;
 	last = *stack;
 	while (last->next)
+	{
+		tmp = last;
 		last = last->next;
-	last->prev->next = NULL;
-	last->prev = NULL;
+	}
+	tmp->next = NULL;
 	last->next = *stack;
-	(*stack)->prev = last;
 	*stack = last;
 }
 

@@ -6,7 +6,7 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/05/28 02:50:26 by tthwe            ###   ########.fr       */
+/*   Updated: 2026/06/03 00:53:11 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ static void	rotate(t_stack **stack)
 		return ;
 	first = *stack;
 	*stack = (*stack)->next;
-	(*stack)->prev = NULL;
 	last = *stack;
 	while (last->next)
 		last = last->next;
 	last->next = first;
-	first->prev = last;
 	first->next = NULL;
 }
 

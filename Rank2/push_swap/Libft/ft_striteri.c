@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/06/03 00:50:09 by tthwe            ###   ########.fr       */
+/*   Created: 2025/09/09 21:11:40 by tthwe             #+#    #+#             */
+/*   Updated: 2025/09/09 23:51:26 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack **src, t_stack **dst)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	t_stack	*node;
+	unsigned int	i;
 
-	if (!*src)
+	i = 0;
+	if (!s)
 		return ;
-	node = *src;
-	*src = (*src)->next;
-	node->next = *dst;
-	*dst = node;
-}
-
-void	pa(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }

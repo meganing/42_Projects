@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/06/03 00:50:09 by tthwe            ###   ########.fr       */
+/*   Created: 2025/09/07 02:46:42 by tthwe             #+#    #+#             */
+/*   Updated: 2025/09/07 02:49:39 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack **src, t_stack **dst)
+static char	*ft_strcpy(char *dest, const char *src)
 {
-	t_stack	*node;
+	int	i;
 
-	if (!*src)
-		return ;
-	node = *src;
-	*src = (*src)->next;
-	node->next = *dst;
-	*dst = node;
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src [i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
-void	pa(t_stack **stack_a, t_stack **stack_b)
+char	*ft_strdup(const char *s)
 {
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-}
+	int		strlen;
+	char	*dest;
 
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
+	strlen = ft_strlen(s);
+	dest = (char *)malloc((sizeof(char)) * (strlen + 1));
+	if (dest == NULL)
+		return (0);
+	dest = ft_strcpy(dest, s);
+	return (dest);
 }

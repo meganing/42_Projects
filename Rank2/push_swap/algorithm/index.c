@@ -6,53 +6,63 @@
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/05/28 02:50:26 by tthwe            ###   ########.fr       */
+/*   Updated: 2026/06/03 00:19:12 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-/*
-** Finds the smallest data value in the stack that is still larger
-** than 'min_val'. Used to walk through values in ascending order.
-*/
-static int	find_next_min(t_stack *stack, int min_val)
+static t_stack	*find_min(t_stack *stack)
 {
-	int	result;
+	t_stack	*min;
 
-	result = INT_MAX;
+	min = stack;
 	while (stack)
 	{
-		if (stack->data > min_val && stack->data < result)
-			result = stack->data;
+		if (stack->index < min->index)
+			min = stack;
 		stack = stack->next;
 	}
-	return (result);
+	return (min);
 }
 
-/*
-** Assigns index 0 (smallest) through n-1 (largest) to each node.
-** After this, all algorithm logic works on index instead of data.
-** Example: data [-5, 42, 7] → index [0, 2, 1]
-*/
-void	assign_index(t_stack *stack)
+void	assign_indexes(t_stack *a)
 {
-	int		rank;
-	int		current_val;
-	t_stack	*node;
+	t_stack	*outer;
+	t_stack	*inner;
+	int		index;
 
-	rank = 0;
-	current_val = INT_MIN;
-	while (rank < stack_size(stack))
+	outer = a;
+	while (outer)
 	{
-		current_val = find_next_min(stack, current_val);
-		node = stack;
-		while (node)
+		index = 0;
+		inner = a;
+		while (inner)
 		{
-			if (node->data == current_val)
-				node->index = rank;
-			node = node->next;
+			if (inner->data < outer->data)
+				index++;
+			inner = inner->next;
 		}
-		rank++;
+		outer->index = index;
+		outer = outer->next;
+	}
+}
+
+void	rotate_to_min(t_stack **a)
+{
+	t_stack	*min_node;
+	int		pos;
+	int		size;
+
+	min_node = find_min(*a);
+	size = stack_size(*a);
+	pos = get_pos(*a, min_node);
+	while (*a != min_node)
+	{
+		if (pos <= size / 2)
+			ra(a);
+		else
+			rra(a);
+		pos = get_pos(*a, min_node);
 	}
 }

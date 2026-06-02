@@ -5,96 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 03:26:57 by tthwe             #+#    #+#             */
-/*   Updated: 2026/05/28 04:29:46 by tthwe            ###   ########.fr       */
+/*   Created: 2026/06/02 23:46:56 by tthwe             #+#    #+#             */
+/*   Updated: 2026/06/03 00:13:15 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	free_stack(t_stack **stack)
+static int	is_valid_int(char *str)
 {
-	t_stack	*tmp;
+	long	num;
+	int		i;
+	int		sign;
 
-	while (*stack)
+	i = 0;
+	sign = 1;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-}
-
-void	free_n_exit(t_stack **stack)
-{
-	free_stack(stack);
-	write(2, "Error\n", 6);
-	exit(1);
-}
-
-static t_stack	*ft_new_node(int data)
-{
-	t_stack	*node;
-
-	node = malloc(sizeof(t_stack));
-	if (!node)
-		return (NULL);
-	node->data = data;
-	node->index = 0;
-	node->prev = NULL;
-	node->next = NULL;
-	return (node);
-}
-
-void	ft_stack_add_bottom(t_stack **stack, int data)
-{
-	t_stack	*new;
-	t_stack	*last;
-
-	new = ft_new_node(data);
-	if (!new)
-		return ;
-	if (!*stack)
+	if (!str[i])
+		return (0);
+	num = 0;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		*stack = new;
-		return ;
+		num = num * 10 + (str[i] - '0');
+		if (sign * num < INT_MIN || sign * num > INT_MAX)
+			return (0);
+		i++;
 	}
-	last = *stack;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-	new->prev = last;
+	if (str[i])
+		return (0);
+	return (1);
 }
 
-int	has_duplicate(t_stack *stack, int data)
+static int	has_duplicates(t_stack *stack, int val)
 {
 	while (stack)
 	{
-		if (stack->data == data)
+		if (stack->data == val)
 			return (1);
 		stack = stack->next;
 	}
 	return (0);
 }
 
-int	main(int ac, char **av)
+void	error_exit(t_stack *a, t_stack *b)
 {
-	t_stack	*stack_a;
-	int		nbr;
+	free_stack(&a);
+	free_stack(&b);
+	ft_putstr_fd("Error\n", 2);
+	exit(1);
+}
+
+t_stack	*parse_args(int argc, char **argv)
+{
+	t_stack	*a;
+	t_stack	*node;
+	int		val;
 	int		i;
 
-	stack_a = NULL;
-	if (ac == 1)
-		return (0);
+	a = NULL;
 	i = 1;
-	while (i < ac)
+	while (i < argc)
 	{
-		if (!ft_atoi_check(av[i], &nbr))
-			free_n_exit(&stack_a);
-		if (has_duplicate(stack_a, nbr))
-			free_n_exit(&stack_a);
-		ft_stack_add_bottom(&stack_a, nbr);
+		if (!is_valid_int(argv[i]))
+			error_exit(a, NULL);
+		val = ft_atoi(argv[i]);
+		if (has_duplicates(a, val))
+			error_exit(a, NULL);
+		node = new_node(val);
+		stack_add_bottom(&a, node);
 		i++;
 	}
-	free_stack(&stack_a);
-	return (0);
+	return (a);
 }

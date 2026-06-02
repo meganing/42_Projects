@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/06/03 00:50:09 by tthwe            ###   ########.fr       */
+/*   Created: 2025/08/28 21:16:55 by tthwe             #+#    #+#             */
+/*   Updated: 2025/09/07 03:09:22 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack **src, t_stack **dst)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	t_stack	*node;
+	unsigned char	*temp1;
+	unsigned char	*temp2;
 
-	if (!*src)
-		return ;
-	node = *src;
-	*src = (*src)->next;
-	node->next = *dst;
-	*dst = node;
-}
-
-void	pa(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
+	if (!src || !dest)
+		return (NULL);
+	temp1 = (unsigned char *)src;
+	temp2 = (unsigned char *)dest;
+	if (dest < src)
+	{
+		while (n > 0)
+		{
+			*(temp2++) = *(temp1++);
+			n--;
+		}
+	}
+	else
+	{
+		while (n > 0)
+		{
+			n--;
+			temp2[n] = temp1[n];
+		}
+	}
+	return (dest);
 }

@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tthwe <tthwe@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/28 02:50:26 by tthwe             #+#    #+#             */
-/*   Updated: 2026/06/03 00:50:09 by tthwe            ###   ########.fr       */
+/*   Created: 2025/09/07 00:13:20 by tthwe             #+#    #+#             */
+/*   Updated: 2025/09/07 02:07:25 by tthwe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-static void	push(t_stack **src, t_stack **dst)
+char	*ft_strchr(const char *s, int c)
 {
-	t_stack	*node;
-
-	if (!*src)
-		return ;
-	node = *src;
-	*src = (*src)->next;
-	node->next = *dst;
-	*dst = node;
-}
-
-void	pa(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_b, stack_a);
-	write(1, "pa\n", 3);
-}
-
-void	pb(t_stack **stack_a, t_stack **stack_b)
-{
-	push(stack_a, stack_b);
-	write(1, "pb\n", 3);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
 }
