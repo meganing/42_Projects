@@ -60,7 +60,7 @@ void	error_exit(t_stack *a, t_stack *b)
 	exit(1);
 }
 
-t_stack	*parse_args(int argc, char **argv)
+static t_stack	*build_stack(char **args)
 {
 	t_stack	*a;
 	t_stack	*node;
@@ -68,12 +68,12 @@ t_stack	*parse_args(int argc, char **argv)
 	int		i;
 
 	a = NULL;
-	i = 1;
-	while (i < argc)
+	i = 0;
+	while (args[i])
 	{
-		if (!is_valid_int(argv[i]))
+		if (!is_valid_int(args[i]))
 			error_exit(a, NULL);
-		val = ft_atoi(argv[i]);
+		val = ft_atoi(args[i]);
 		if (has_duplicates(a, val))
 			error_exit(a, NULL);
 		node = new_node(val);
@@ -81,4 +81,25 @@ t_stack	*parse_args(int argc, char **argv)
 		i++;
 	}
 	return (a);
+}
+
+t_stack	*parse_args(int argc, char **argv)
+{
+	char	**args;
+	t_stack	*stack;
+	int		i;
+
+	if (argc == 2)
+	{
+		args = ft_split(argv[1], ' ');
+		if (!args)
+			error_exit(NULL, NULL);
+		stack = build_stack(args);
+		i = 0;
+		while (args[i])
+			free(args[i++]);
+		free(args);
+		return (stack);
+	}
+	return (build_stack(argv + 1));
 }
