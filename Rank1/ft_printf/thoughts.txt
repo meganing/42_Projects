@@ -1,0 +1,23 @@
+Process
+
+1. write the character in the first argument until it meets a "%" 
+	1.1 count the number of characters being written until it sees a "%"
+2. check what what types of format specifies it follows 
+3. printf out the respective type of argument based on the type
+	3.1 count the number of character being written 
+
+
+
+implememnt the counting system into the putchar. putstr, putnumber function 
+
+function to writely newly:
+
+1. (checked)ft_put-decimal unsigned int for "u" format
+2. (checked)ft_put-an unsigned int as a exadecimal number for X/X format
+3. (checked)ft_put-the addres pf a pointer or any variable for P value;
+
+functions need to modify: make all function return the number of characters written
+1. (checked )ft_printnbr
+2. (checked )ft_printstr
+3. (checked )ft_printchr(considering if I should add)
+
