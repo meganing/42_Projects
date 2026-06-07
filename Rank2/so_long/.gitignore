@@ -1,0 +1,8 @@
+# MiniLibX — extracted from the bundled .tgz at build time, never committed
+mlx/
+minilibx-linux/
+minilibx_opengl_*/
+minilibx_mms_*/
+
+# macOS junk
+.DS_Store
